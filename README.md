@@ -1,2 +1,3 @@
 # Scarpr
- The Social Distancing App
+
+The Social Distancing App
