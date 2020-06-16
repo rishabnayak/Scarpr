@@ -12,7 +12,7 @@ def onStateChange(state):
     print('on -> stateChange: ' + state)
 
     if (state == 'poweredOn'):
-        bleno.startAdvertising('Battery', [primaryService.uuid])
+        bleno.startAdvertising('WiFi Sniffer', [primaryService.uuid])
     else:
         bleno.stopAdvertising()
 

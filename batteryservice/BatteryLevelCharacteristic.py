@@ -28,13 +28,15 @@ class BatteryLevelCharacteristic(Characteristic):
     def onReadRequest(self, offset, callback):
         if sys.platform == 'darwin':
         	output = subprocess.check_output("pmset -g batt", shell=True)
-        	result = {}
         	for row in output.split('\n'):
         		if 'InternalBatter' in row:
-        			percent = row.split('\t')[1].split(';')[0];
-        			percent = int(re.findall('\d+', percent)[0]);
+        			percent = row.split('\t')[1].split(';')[0]
+        			percent = int(re.findall('\d+', percent)[0])
         			callback(Characteristic.RESULT_SUCCESS, array.array('B', [percent]))
         			break
         else:
             # return hardcoded value
             callback(Characteristic.RESULT_SUCCESS, array.array('B', [98]))
+
+            # write to characteristic repeatedly, use cyble instead of nRFConnect. Set characteristic to be notifiable
+            # alternative would be gattpython
