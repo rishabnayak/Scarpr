@@ -7,7 +7,7 @@ import re
 class SnifferCharacteristic(Characteristic):
     def __init__(self):
         Characteristic.__init__(self, {
-            'uuid': '0x2A3D',
+            'uuid': '2A3D',
             'properties': ['read', 'notify'],
             'value': None,
             'descriptors': [
