@@ -4,20 +4,16 @@ import sys
 import subprocess
 import re
 
-class BatteryLevelCharacteristic(Characteristic):
+class SnifferCharacteristic(Characteristic):
     def __init__(self):
         Characteristic.__init__(self, {
-            'uuid': '2A19',
-            'properties': ['read'],
+            'uuid': '0x2A3D',
+            'properties': ['read', 'notify'],
             'value': None,
             'descriptors': [
                   Descriptor({
                     'uuid': '2901',
-                    'value': 'Battery level between 0 and 100 percent'
-                  }),
-                  Descriptor({
-                    'uuid': '2904',
-                    'value': array.array('B', [0x04, 0x01, 0x27, 0xAD, 0x01, 0x00, 0x00 ]) # maybe 12 0xC unsigned 8 bit
+                    'value': 'JSON containing RSSI and MAC Address of Devices'
                   })
                 ]            
           })

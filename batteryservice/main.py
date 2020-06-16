@@ -1,11 +1,11 @@
 from pybleno import *
 import sys
 import signal
-from BatteryService import *
+from SnifferService import *
 
 bleno = Bleno()
 
-primaryService = BatteryService()
+primaryService = SnifferService()
 
 
 def onStateChange(state):
