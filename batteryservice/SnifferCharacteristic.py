@@ -30,7 +30,7 @@ class SnifferCharacteristic(Characteristic):
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        self._updateValueCallback(array.array('i', [98]))
+        self._updateValueCallback(array.array('B', [82, 105, 115, 104, 97, 98]))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
