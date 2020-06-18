@@ -35,8 +35,7 @@ class SnifferCharacteristic(Characteristic):
         command = ['python3', './sniffer.py',
                    '-a', 'wlan1',
                    '-r', '5']
-        runSniffer = subprocess.Popen(
-            command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
+        runSniffer = subprocess.Popen(command)
         output, _ = runSniffer.communicate()
         print(output)
 
