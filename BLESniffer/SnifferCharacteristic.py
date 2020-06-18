@@ -37,7 +37,9 @@ class SnifferCharacteristic(Characteristic):
                    '-r', '5']
         runSniffer = subprocess.Popen(command)
         output, _ = runSniffer.communicate()
-        print(output)
+        asciiArray = [ord(c) for c in output]
+        self._updateValueCallback(array.array(
+            'B', asciiArray))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
