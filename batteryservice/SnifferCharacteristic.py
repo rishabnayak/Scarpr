@@ -4,6 +4,7 @@ import sys
 import subprocess
 import re
 
+
 class SnifferCharacteristic(Characteristic):
     def __init__(self):
         Characteristic.__init__(self, {
@@ -11,28 +12,32 @@ class SnifferCharacteristic(Characteristic):
             'properties': ['read', 'notify'],
             'value': None,
             'descriptors': [
-                  Descriptor({
+                Descriptor({
                     'uuid': '2901',
                     'value': 'JSON containing RSSI and MAC Address of Devices'
-                  })
-                ]            
-          })
-          
+                })
+            ]
+        })
+
         self._value = array.array('B', [0] * 0)
         self._updateValueCallback = None
-          
-    def onReadRequest(self, offset, callback):
-        if sys.platform == 'darwin':
-        	output = subprocess.check_output("pmset -g batt", shell=True)
-        	for row in output.split('\n'):
-        		if 'InternalBatter' in row:
-        			percent = row.split('\t')[1].split(';')[0]
-        			percent = int(re.findall('\d+', percent)[0])
-        			callback(Characteristic.RESULT_SUCCESS, array.array('B', [percent]))
-        			break
-        else:
-            # return hardcoded value
-            callback(Characteristic.RESULT_SUCCESS, array.array('B', [98]))
 
-            # write to characteristic repeatedly, use cyble instead of nRFConnect. Set characteristic to be notifiable
-            # alternative would be gattpython
+    def onReadRequest(self, offset, callback):
+        print('SnifferCharacteristic - %s - onReadRequest: value = %s' %
+              (self['uuid'], [hex(c) for c in self._value]))
+        callback(Characteristic.RESULT_SUCCESS, self._value[offset:])
+
+    def onSubscribe(self, maxValueSize, updateValueCallback):
+        print('SnifferCharacteristic - onSubscribe')
+        self._updateValueCallback = updateValueCallback
+        self._updateValueCallback(array.array('B', [98]))
+
+    def onUnsubscribe(self):
+        print('SnifferCharacteristic - onUnsubscribe')
+        self._updateValueCallback = None
+    
+    def onNotify(self):
+        print('SnifferCharacteristic - onNotify')
+
+    # write to characteristic repeatedly, use cyble instead of nRFConnect. Set characteristic to be notifiable
+    # alternative would be gattpython
