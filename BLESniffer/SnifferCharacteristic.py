@@ -30,7 +30,7 @@ class SnifferCharacteristic(Characteristic):
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        command = ['python3 sniffer.py', 
+        command = ['python3', './sniffer.py', 
                     '-a', 'wlan1', 
                     '-r', '5']
         runSniffer = subprocess.Popen(
