@@ -9,7 +9,7 @@ class SnifferCharacteristic(Characteristic):
     def __init__(self):
         Characteristic.__init__(self, {
             'uuid': '2A3D',
-            'properties': ['read', 'notify'],
+            'properties': ['notify'],
             'value': None,
             'descriptors': [
                 Descriptor({
@@ -22,11 +22,6 @@ class SnifferCharacteristic(Characteristic):
         self._value = array.array('B', [0] * 0)
         self._updateValueCallback = None
 
-    def onReadRequest(self, offset, callback):
-        print('SnifferCharacteristic - %s - onReadRequest: value = %s' %
-              (self['uuid'], [hex(c) for c in self._value]))
-        callback(Characteristic.RESULT_SUCCESS, self._value[offset:])
-
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
@@ -38,11 +33,13 @@ class SnifferCharacteristic(Characteristic):
         command = ['python3', './sniffer.py',
                    '-a', 'wlan1',
                    '-r', '5']
-        runSniffer = subprocess.Popen(command)
-        output, _ = runSniffer.communicate()
-        asciiArray = [ord(c) for c in output]
-        self._updateValueCallback(array.array(
-            'B', asciiArray))
+        with subprocess.Popen(command).stdout as output:
+            for line in output:
+                print(line)
+        # output, _ = runSniffer.communicate()
+        # asciiArray = [ord(c) for c in output]
+        # self._updateValueCallback(array.array(
+        #     'B', asciiArray))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
