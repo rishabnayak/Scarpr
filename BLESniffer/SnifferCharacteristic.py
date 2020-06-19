@@ -36,9 +36,12 @@ class SnifferCharacteristic(Characteristic):
         runSniffer = subprocess.Popen(command)
         runSniffer.communicate()
         a = open("./temp.txt", "r")
-        a = a.read()
+        b = a.read()
+        a.close()
+        b = b.split(",")
+        b = [abs(int(i)) for i in b]
         self._updateValueCallback(array.array(
-                        'B', [ord(a[0])]))
+                        'B', b))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
