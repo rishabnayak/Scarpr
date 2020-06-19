@@ -42,6 +42,7 @@ class SnifferCharacteristic(Characteristic):
         #             'B', asciiArray))
         a = open("./temp.txt", "r")
         a = a.read()
+        print(a)
         self._updateValueCallback(array.array(
                         'B', ord(a[0])))
 
