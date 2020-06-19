@@ -43,7 +43,7 @@ class SnifferCharacteristic(Characteristic):
         a = open("./temp.txt", "r")
         a = a.read()
         self._updateValueCallback(array.array(
-                        'B', 82))
+                        'B', [ord(a[0])]))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
