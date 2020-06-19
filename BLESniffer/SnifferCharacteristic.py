@@ -30,7 +30,7 @@ class SnifferCharacteristic(Characteristic):
         # for i in range(5):
         #     self._updateValueCallback(array.array(
         #         'B', [i+80]))
-        
+
         # command = ['python3', './sniffer.py',
         #            '-a', 'wlan1',
         #            '-r', '5']
@@ -42,7 +42,7 @@ class SnifferCharacteristic(Characteristic):
         b = b.split(",")
         b = [abs(int(i)) for i in b]
         self._updateValueCallback(array.array(
-                        'B', [0, 82]))
+                        'B', b))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
