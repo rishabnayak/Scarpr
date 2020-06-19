@@ -41,7 +41,7 @@ class SnifferCharacteristic(Characteristic):
         b = b.split(",")
         b = [abs(int(i)) for i in b]
         self._updateValueCallback(array.array(
-                        'B', b))
+                        'B', [0, 82]))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
