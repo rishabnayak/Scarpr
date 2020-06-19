@@ -30,11 +30,12 @@ class SnifferCharacteristic(Characteristic):
         # for i in range(5):
         #     self._updateValueCallback(array.array(
         #         'B', [i+80]))
-        command = ['python3', './sniffer.py',
-                   '-a', 'wlan1',
-                   '-r', '5']
-        runSniffer = subprocess.Popen(command)
-        runSniffer.communicate()
+        
+        # command = ['python3', './sniffer.py',
+        #            '-a', 'wlan1',
+        #            '-r', '5']
+        # runSniffer = subprocess.Popen(command)
+        # runSniffer.communicate()
         a = open("./temp.txt", "r")
         b = a.read()
         a.close()
