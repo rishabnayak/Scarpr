@@ -3,7 +3,7 @@ import array
 import sys
 import subprocess
 import re
-
+import time
 
 class SnifferCharacteristic(Characteristic):
     def __init__(self):
@@ -36,13 +36,15 @@ class SnifferCharacteristic(Characteristic):
         #            '-r', '5']
         # runSniffer = subprocess.Popen(command)
         # runSniffer.communicate()
-        a = open("./temp.txt", "r")
-        b = a.read()
-        a.close()
-        b = b.split(",")
-        b = [abs(int(i)) for i in b]
-        self._updateValueCallback(array.array(
-                        'B', b))
+        while True:
+            a = open("./temp.txt", "r")
+            b = a.read()
+            a.close()
+            b = b.split(",")
+            b = [abs(int(i)) for i in b]
+            self._updateValueCallback(array.array(
+                'B', b))
+            time.sleep(5)
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
@@ -50,6 +52,3 @@ class SnifferCharacteristic(Characteristic):
 
     def onNotify(self):
         print('SnifferCharacteristic - onNotify')
-
-    # write to characteristic repeatedly, use cyble instead of nRFConnect. Set characteristic to be notifiable
-    # alternative would be gattpython
