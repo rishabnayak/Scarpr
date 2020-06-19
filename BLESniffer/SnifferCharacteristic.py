@@ -30,16 +30,20 @@ class SnifferCharacteristic(Characteristic):
         # for i in range(5):
         #     self._updateValueCallback(array.array(
         #         'B', [i+80]))
-        command = ['python3', './sniffer.py',
-                   '-a', 'wlan1',
-                   '-r', '5']
+        # command = ['python3', './sniffer.py',
+        #            '-a', 'wlan1',
+        #            '-r', '5']
         # figure out why this isnt working
-        with subprocess.Popen(command).stdout as output:
-            for line in output:
-                print(line)
-                # asciiArray = [ord(c) for c in line]
-                self._updateValueCallback(array.array(
-                    'B', [82, 105, 115, 104, 97, 98]))
+        # with subprocess.Popen(command).stdout as output:
+        #     for line in output:
+        #         print(line)
+        #         # asciiArray = [ord(c) for c in line]
+        #         self._updateValueCallback(array.array(
+        #             'B', asciiArray))
+        a = open("./temp.txt", "r")
+        a = a.read()
+        self._updateValueCallback(array.array(
+                        'B', ord(a[0])))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
