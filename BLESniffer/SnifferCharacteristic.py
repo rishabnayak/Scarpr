@@ -33,11 +33,13 @@ class SnifferCharacteristic(Characteristic):
         command = ['python3', './sniffer.py',
                    '-a', 'wlan1',
                    '-r', '5']
+        # figure out why this isnt working
         with subprocess.Popen(command).stdout as output:
             for line in output:
-                asciiArray = [ord(c) for c in line]
+                print(line)
+                # asciiArray = [ord(c) for c in line]
                 self._updateValueCallback(array.array(
-                    'B', asciiArray))
+                    'B', [82, 105, 115, 104, 97, 98]))
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
