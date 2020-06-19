@@ -25,11 +25,11 @@ class SnifferCharacteristic(Characteristic):
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        self._updateValueCallback(array.array(
-            'B', [82, 105, 115, 104, 97, 98]))
-        for i in range(5):
-            self._updateValueCallback(array.array(
-                'B', [i+80]))
+        # self._updateValueCallback(array.array(
+        #     'B', [82, 105, 115, 104, 97, 98]))
+        # for i in range(5):
+        #     self._updateValueCallback(array.array(
+        #         'B', [i+80]))
         command = ['python3', './sniffer.py',
                    '-a', 'wlan1',
                    '-r', '5']
