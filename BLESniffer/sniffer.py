@@ -126,9 +126,9 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
                 if oui_id in deviceList:
                     print({'RSSI': rssi, 'MAC Address': mac})
                     a = os.open('temp.txt', os.O_WRONLY)
-                    os.write(a, str(ctr))
-                    os.write(a, ",")
-                    os.write(a, str(rssi))
+                    os.write(a, str(ctr).encode())
+                    os.write(a, ",".encode())
+                    os.write(a, str(rssi).encode())
                 ctr += 1
                 continue
             foundMacs[mac].append(float(rssi))
