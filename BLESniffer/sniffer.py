@@ -108,7 +108,7 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
         'OnePlus Tech (Shenzhen) Ltd',
         'Xiaomi Communications Co Ltd',
         'LG Electronics (Mobile Communications)']
-    ctr = 0
+    # ctr = 0
     for line in output.decode('utf-8').split('\n'):
         if line.strip() == '':
             continue
@@ -119,17 +119,19 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
                 continue
             rssi = dats[2]
             if mac not in foundMacs:
-                foundMacs[mac] = [ctr, float(rssi)]
+                # foundMacs[mac] = [ctr, float(rssi)]
+                foundMacs[mac] = [float(rssi)]
                 oui_id = 'Not in OUI'
                 if mac[:8] in oui:
                     oui_id = oui[mac[:8]]
                 if oui_id in deviceList:
                     print({'RSSI': rssi, 'MAC Address': mac})
                     a = os.open('temp.txt', os.O_WRONLY)
-                    os.write(a, str(ctr).encode())
+                    # os.write(a, str(ctr).encode())
+                    os.write(a, str(mac).encode())
                     os.write(a, ",".encode())
                     os.write(a, str(rssi).encode())
-                ctr += 1
+                # ctr += 1
                 continue
             foundMacs[mac].append(float(rssi))
 
@@ -138,13 +140,22 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
         if mac[:8] in oui:
             oui_id = oui[mac[:8]]
         if oui_id in deviceList:
-            if len(foundMacs[mac][1:]) >= 2:
-                if round(statistics.stdev(foundMacs[mac][1:])) >= deltarssi:
+            # if len(foundMacs[mac][1:]) >= 2:
+            if len(foundMacs[mac]) >= 2:
+                # if round(statistics.stdev(foundMacs[mac][1:])) >= deltarssi:
+                if round(statistics.stdev(foundMacs[mac])) >= deltarssi:
                     print("Location Changed! Standard Deviation of RSSI for", mac, "=",
-                          round(statistics.stdev(foundMacs[mac][1:])))
+                        #   round(statistics.stdev(foundMacs[mac][1:])))
+                        round(statistics.stdev(foundMacs[mac])))
                     print("New Data:", {'RSSI': float(
-                        round(statistics.mean(foundMacs[mac][1:]), 2)), 'MAC Address': mac})
-        foundMacs[mac] = [foundMacs[mac][0]]+[float(round(statistics.mean(foundMacs[mac][1:]), 2))]
+                        # round(statistics.mean(foundMacs[mac][1:]), 2)), 'MAC Address': mac})
+                        round(statistics.mean(foundMacs[mac]), 2)), 'MAC Address': mac})
+                    a = os.open('temp.txt', os.O_WRONLY)
+                    os.write(a, str(mac).encode())
+                    os.write(a, ",".encode())
+                    os.write(a, str(float(round(statistics.mean(foundMacs[mac]), 2))).encode())
+        # foundMacs[mac] = [foundMacs[mac][0]]+[float(round(statistics.mean(foundMacs[mac][1:]), 2))]
+        foundMacs[mac] = [float(round(statistics.mean(foundMacs[mac]), 2))]
 
     return adapter
 

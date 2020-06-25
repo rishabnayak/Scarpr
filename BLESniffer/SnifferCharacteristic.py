@@ -25,22 +25,10 @@ class SnifferCharacteristic(Characteristic):
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        # self._updateValueCallback(array.array(
-        #     'B', [82, 105, 115, 104, 97, 98]))
-        # for i in range(5):
-        #     self._updateValueCallback(array.array(
-        #         'B', [i+80]))
-
-        # command = ['python3', './sniffer.py',
-        #            '-a', 'wlan1',
-        #            '-r', '5']
-        # runSniffer = subprocess.Popen(command)
-        # runSniffer.communicate()
         while True:
             a = open("./temp.txt", "r")
             b = a.read()
-            b = b.split(",")
-            b = [abs(int(i)) for i in b]
+            b = [ord(c) for c in b]
             self._updateValueCallback(array.array(
                 'B', b))
             time.sleep(5)
