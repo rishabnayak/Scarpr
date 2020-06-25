@@ -39,7 +39,6 @@ class SnifferCharacteristic(Characteristic):
         while True:
             a = open("./temp.txt", "r")
             b = a.read()
-            a.close()
             b = b.split(",")
             b = [abs(int(i)) for i in b]
             self._updateValueCallback(array.array(
