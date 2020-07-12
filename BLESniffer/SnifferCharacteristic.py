@@ -16,10 +16,6 @@ class SnifferCharacteristic(Characteristic):
                     'uuid': '2901',
                     'value': 'JSON containing RSSI and MAC Address of Devices'
                 }),
-                Descriptor({
-                    'uuid': '2902',
-                    'value': '0'
-                })
             ]
         })
 
