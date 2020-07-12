@@ -9,7 +9,7 @@ class SnifferCharacteristic(Characteristic):
     def __init__(self):
         Characteristic.__init__(self, {
             'uuid': '2A3D',
-            'properties': ['write','notify'],
+            'properties': ['notify'],
             'value': None,
             'descriptors': [
                 Descriptor({
