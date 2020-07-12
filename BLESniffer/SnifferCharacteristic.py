@@ -18,7 +18,7 @@ class SnifferCharacteristic(Characteristic):
                 }),
                 Descriptor({
                     'uuid': '2902',
-                    'value': 0
+                    'value': '0'
                 })
             ]
         })
