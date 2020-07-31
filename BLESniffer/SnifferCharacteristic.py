@@ -31,7 +31,7 @@ class SnifferCharacteristic(Characteristic):
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        threading.Timer(5, SnifferCharacteristic.sendData, self).start()
+        threading.Timer(5, SnifferCharacteristic.sendData, [self]).start()
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
