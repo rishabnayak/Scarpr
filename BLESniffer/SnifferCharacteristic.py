@@ -26,6 +26,7 @@ class SnifferCharacteristic(Characteristic):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
         while True:
+            time.sleep(1)
             self._updateValueCallback(array.array('B', [7]))
         # while False:
         #     a = open("./temp.txt", "r")
