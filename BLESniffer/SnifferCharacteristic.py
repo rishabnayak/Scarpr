@@ -24,10 +24,11 @@ class SnifferCharacteristic(Characteristic):
 
     @staticmethod
     def sendData(self):
-        a = open("./temp.txt", "r")
-        b = a.read()
-        b = [ord(c) for c in b]
-        self._updateValueCallback(array.array('B', b))
+        print("Data")
+        # a = open("./temp.txt", "r")
+        # b = a.read()
+        # b = [ord(c) for c in b]
+        # self._updateValueCallback(array.array('B', b))
 
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
