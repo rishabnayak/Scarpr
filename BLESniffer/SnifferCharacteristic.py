@@ -22,18 +22,16 @@ class SnifferCharacteristic(Characteristic):
         self._value = array.array('B', [0] * 0)
         self._updateValueCallback = None
 
-    @staticmethod
     def sendData(self):
-        print("Data")
-        # a = open("./temp.txt", "r")
-        # b = a.read()
-        # b = [ord(c) for c in b]
-        # self._updateValueCallback(array.array('B', b))
+        a = open("./temp.txt", "r")
+        b = a.read()
+        b = [ord(c) for c in b]
+        self._updateValueCallback(array.array('B', b))
 
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        threading.Timer(5, SnifferCharacteristic.sendData(self)).start()
+        threading.Timer(5, SnifferCharacteristic.sendData, self).start()
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
