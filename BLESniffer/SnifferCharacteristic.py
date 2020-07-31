@@ -22,6 +22,7 @@ class SnifferCharacteristic(Characteristic):
         self._value = array.array('B', [0] * 0)
         self._updateValueCallback = None
 
+    @staticmethod
     def sendData(self):
         a = open("./temp.txt", "r")
         b = a.read()
