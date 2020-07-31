@@ -27,6 +27,7 @@ class SnifferCharacteristic(Characteristic):
         b = a.read()
         b = [ord(c) for c in b]
         self._updateValueCallback(array.array('B', b))
+        threading.Timer(5, SnifferCharacteristic.sendData, [self]).start()
 
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
