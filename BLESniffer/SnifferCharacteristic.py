@@ -26,12 +26,14 @@ class SnifferCharacteristic(Characteristic):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
         while True:
-            a = open("./temp.txt", "r")
-            b = a.read()
-            b = [ord(c) for c in b]
-            self._updateValueCallback(array.array(
-                'B', b))
-            time.sleep(5)
+            self._updateValueCallback(array.array('B', [7]))
+        # while False:
+        #     a = open("./temp.txt", "r")
+        #     b = a.read()
+        #     b = [ord(c) for c in b]
+        #     self._updateValueCallback(array.array(
+        #         'B', b))
+        #     time.sleep(5)
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
