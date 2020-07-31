@@ -3,7 +3,7 @@ import array
 import sys
 import subprocess
 import re
-import time
+import threading
 
 class SnifferCharacteristic(Characteristic):
     def __init__(self):
@@ -22,19 +22,16 @@ class SnifferCharacteristic(Characteristic):
         self._value = array.array('B', [0] * 0)
         self._updateValueCallback = None
 
+    def sendData(self):
+        a = open("./temp.txt", "r")
+        b = a.read()
+        b = [ord(c) for c in b]
+        self._updateValueCallback(array.array('B', b))
+
     def onSubscribe(self, maxValueSize, updateValueCallback):
         print('SnifferCharacteristic - onSubscribe')
         self._updateValueCallback = updateValueCallback
-        while True:
-            time.sleep(1)
-            self._updateValueCallback(array.array('B', [7]))
-        # while False:
-        #     a = open("./temp.txt", "r")
-        #     b = a.read()
-        #     b = [ord(c) for c in b]
-        #     self._updateValueCallback(array.array(
-        #         'B', b))
-        #     time.sleep(5)
+        threading.Timer(5, SnifferCharacteristic.sendData(self)).start()
 
     def onUnsubscribe(self):
         print('SnifferCharacteristic - onUnsubscribe')
