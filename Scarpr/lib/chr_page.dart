@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:typed_data';
 import 'dart:ui';
+import 'dart:collection';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_ble_lib/flutter_ble_lib.dart';
@@ -15,7 +16,10 @@ class _ChrPageState extends State<ChrPage> {
   ScanResult _result;
   Characteristic _chr;
   StreamSubscription<Uint8List> _notifySub;
+  HashMap deviceData = new HashMap<String, double>();
   TextEditingController _notifyCtrl = TextEditingController();
+  double rssiThreshold = 30;
+  int numPeopleAround = 0;
 
   @override
   Future<void> didChangeDependencies() async {
@@ -38,7 +42,14 @@ class _ChrPageState extends State<ChrPage> {
   void _onNotify() async {
     if (_notifySub == null) {
       _notifySub = _chr.monitor().listen((Uint8List data) {
-        setState(() => _notifyCtrl.text = String.fromCharCodes(data));
+        deviceData[String.fromCharCodes(data).split(",")[0]] =
+            double.tryParse(String.fromCharCodes(data).split(",")[1]);
+        deviceData.values.forEach((element) {
+          if (element < 30) {
+            numPeopleAround++;
+          }
+        });
+        setState(() => _notifyCtrl.text = numPeopleAround.toString());
       });
       setState(() {});
     } else {
@@ -82,6 +93,10 @@ class _ChrPageState extends State<ChrPage> {
             SizedBox(width: 12),
             Expanded(
                 child: TextField(
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'People Around',
+              ),
               controller: _notifyCtrl,
               readOnly: true,
               style: TextStyle(fontFamily: 'monospace'),

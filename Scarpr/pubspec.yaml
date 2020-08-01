@@ -24,13 +24,11 @@ dependencies:
   flutter:
     sdk: flutter
   circle_wave_progress: ^0.0.4
-  device_info: ^0.4.2+2
-  grizzly_io: ^2.2.0
+  device_info: ^0.4.2+4
+  grizzly_io: ^2.2.2
   location: ^3.0.2
-  flutter_ble_lib:
-    git:
-      url: https://github.com/Polidea/FlutterBleLib.git
-      ref: release/2.2.6
+  flutter_ble_lib: ^2.2.9
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -54,7 +52,7 @@ flutter:
     - vendors.csv
     - services.csv
     - characteristics.csv
-
+    
   # To add assets to your application, add an assets section, like this:
   # assets:
   #   - images/a_dot_burr.jpeg

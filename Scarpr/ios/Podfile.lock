@@ -2,7 +2,7 @@ PODS:
   - device_info (0.0.1):
     - Flutter
   - Flutter (1.0.0)
-  - flutter_ble_lib (2.2.6):
+  - flutter_ble_lib (2.2.9):
     - Flutter
     - MultiplatformBleAdapter (~> 0.1.6)
   - location (0.0.1):
@@ -37,7 +37,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
-  flutter_ble_lib: 417ac95abbc0aebf561027110092361bcb152a0b
+  flutter_ble_lib: 18c15b1ceaeebfecd2e0beae2628030e66cd8a19
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
   location_web: b94e7433cfe28c0f7c8923c2ee482824b32e55a7
   MultiplatformBleAdapter: 652f47ecd7f5036756517cf66833210709a72eab

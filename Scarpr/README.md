@@ -1,6 +1,6 @@
 # Scarpr
 
-The Social Distancing App
+A new Flutter project.
 
 ## Getting Started
 

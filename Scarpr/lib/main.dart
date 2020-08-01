@@ -84,6 +84,7 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
   Future<void> initStateAsync() async {
     await assignedNumbersLoad();
     await _bleManager.createClient();
+    _bleManager.setLogLevel(LogLevel.verbose);
     _startScan();
   }
 
@@ -118,12 +119,12 @@ class _MainState extends State<Main> with WidgetsBindingObserver {
     _bleManager
         .startPeripheralScan(scanMode: ScanMode.balanced)
         .listen((ScanResult result) {
-      if (result.peripheral.name == 'WiFi Sniffer') {
+      if (result.peripheral.name == 'WiFi Sniffer' ||
+          result.peripheral.name == 'raspberrypi') {
         BleDevice device = BleDevice(result, DateTime.now());
         int index = _devices.indexWhere((dynamic _device) =>
             _device.result.peripheral.identifier ==
             device.result.peripheral.identifier);
-
         setState(() {
           if (index < 0)
             _devices.add(device);
