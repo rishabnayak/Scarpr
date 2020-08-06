@@ -7,8 +7,6 @@ PODS:
     - MultiplatformBleAdapter (~> 0.1.6)
   - location (0.0.1):
     - Flutter
-  - location_web (0.0.1):
-    - Flutter
   - MultiplatformBleAdapter (0.1.6)
 
 DEPENDENCIES:
@@ -16,7 +14,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - flutter_ble_lib (from `.symlinks/plugins/flutter_ble_lib/ios`)
   - location (from `.symlinks/plugins/location/ios`)
-  - location_web (from `.symlinks/plugins/location_web/ios`)
 
 SPEC REPOS:
   trunk:
@@ -31,17 +28,14 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_ble_lib/ios"
   location:
     :path: ".symlinks/plugins/location/ios"
-  location_web:
-    :path: ".symlinks/plugins/location_web/ios"
 
 SPEC CHECKSUMS:
   device_info: d7d233b645a32c40dfdc212de5cf646ca482f175
   Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
   flutter_ble_lib: 18c15b1ceaeebfecd2e0beae2628030e66cd8a19
   location: 3a2eed4dd2fab25e7b7baf2a9efefe82b512d740
-  location_web: b94e7433cfe28c0f7c8923c2ee482824b32e55a7
   MultiplatformBleAdapter: 652f47ecd7f5036756517cf66833210709a72eab
 
-PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
+PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
 
 COCOAPODS: 1.8.4

@@ -18,7 +18,7 @@ class _ChrPageState extends State<ChrPage> {
   StreamSubscription<Uint8List> _notifySub;
   HashMap deviceData = new HashMap<String, double>();
   TextEditingController _notifyCtrl = TextEditingController();
-  double rssiThreshold = 30;
+  double rssiThreshold = -30;
   int numPeopleAround = 0;
 
   @override
@@ -42,13 +42,14 @@ class _ChrPageState extends State<ChrPage> {
   void _onNotify() async {
     if (_notifySub == null) {
       _notifySub = _chr.monitor().listen((Uint8List data) {
-        deviceData[String.fromCharCodes(data).split(",")[0]] =
-            double.tryParse(String.fromCharCodes(data).split(",")[1]);
-        deviceData.values.forEach((element) {
-          if (element < 30) {
+        String macAddress = String.fromCharCodes(data).split(",")[0];
+        double rssi = double.tryParse(String.fromCharCodes(data).split(",")[1]);
+        if (!deviceData.containsKey(macAddress)) {
+          if (deviceData[macAddress] < -30 && deviceData[macAddress] > -95) {
             numPeopleAround++;
           }
-        });
+        }
+        deviceData[macAddress] = rssi;
         setState(() => _notifyCtrl.text = numPeopleAround.toString());
       });
       setState(() {});
