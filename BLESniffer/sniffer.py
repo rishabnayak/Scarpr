@@ -87,7 +87,8 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
                '-T', 'fields', '-e',
                'wlan.sa', '-e',
                'wlan.bssid_resolved', '-e',
-               'radiotap.dbm_antsignal']
+               'radiotap.dbm_antsignal', '-e',
+               'radiotap.txpower']
 
     run_tshark = subprocess.Popen(
         command, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)
@@ -110,6 +111,7 @@ def scan(adapter, refreshrate, dictionary, deltarssi, foundMacs):
         'LG Electronics (Mobile Communications)']
     # ctr = 0
     for line in output.decode('utf-8').split('\n'):
+        print(line)
         if line.strip() == '':
             continue
         mac = line.split()[0].strip().split(',')[0]

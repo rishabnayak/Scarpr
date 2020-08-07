@@ -52,7 +52,6 @@ class _ChrPageState extends State<ChrPage> {
         deviceData[macAddress] = rssi;
         setState(() => _notifyCtrl.text = numPeopleAround.toString());
       });
-      setState(() {});
     } else {
       await _notifySub.cancel();
       setState(() => _notifySub = null);
