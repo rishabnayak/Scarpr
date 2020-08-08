@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 import 'dart:typed_data';
 import 'dart:ui';
 import 'dart:collection';
@@ -18,7 +19,9 @@ class _ChrPageState extends State<ChrPage> {
   StreamSubscription<Uint8List> _notifySub;
   HashMap deviceData = new HashMap<String, double>();
   TextEditingController _notifyCtrl = TextEditingController();
-  double rssiThreshold = -30;
+  double rssiHighThreshold = -20;
+  double rssiLowThreshold = -95;
+  double txPower = -20;
   int numPeopleAround = 0;
 
   @override
@@ -44,13 +47,15 @@ class _ChrPageState extends State<ChrPage> {
       _notifySub = _chr.monitor().listen((Uint8List data) {
         String macAddress = String.fromCharCodes(data).split(",")[0];
         double rssi = double.tryParse(String.fromCharCodes(data).split(",")[1]);
-        if (!deviceData.containsKey(macAddress)) {
-          if (deviceData[macAddress] < -30 && deviceData[macAddress] > -95) {
+        if (rssi < rssiHighThreshold && rssi > rssiLowThreshold) {
+          if (!deviceData.containsKey(macAddress)) {
             numPeopleAround++;
+            setState(() => _notifyCtrl.text = numPeopleAround.toString());
           }
+          double distance = pow(10, ((txPower - rssi) / (10 * 2)));
+          deviceData[macAddress] = double.tryParse(distance.toStringAsFixed(2));
+          setState(() {});
         }
-        deviceData[macAddress] = rssi;
-        setState(() => _notifyCtrl.text = numPeopleAround.toString());
       });
     } else {
       await _notifySub.cancel();
@@ -74,7 +79,7 @@ class _ChrPageState extends State<ChrPage> {
     String characteristic = characteristicLookup(_chr.uuid);
     characteristic = characteristic != null ? '\n' + characteristic : '';
 
-    return Column(children: [buildNotify()]);
+    return Column(children: [buildNotify(), buildTable()]);
   }
 
   Widget buildNotify() {
@@ -106,6 +111,28 @@ class _ChrPageState extends State<ChrPage> {
         padding: EdgeInsets.symmetric(vertical: 16, horizontal: 12),
       ),
       margin: EdgeInsets.symmetric(vertical: 12, horizontal: 8),
+    );
+  }
+
+  Widget buildTable() {
+    return new ListView.builder(
+      scrollDirection: Axis.vertical,
+      shrinkWrap: true,
+      itemCount: deviceData.length,
+      itemBuilder: (BuildContext context, int index) {
+        String key = deviceData.keys.elementAt(index);
+        return new Column(
+          children: <Widget>[
+            new ListTile(
+              title: new Text("$key"),
+              subtitle: new Text("${deviceData[key]}"),
+            ),
+            new Divider(
+              height: 2.0,
+            ),
+          ],
+        );
+      },
     );
   }
 }
